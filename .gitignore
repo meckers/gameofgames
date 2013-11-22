@@ -1,0 +1,26 @@
+# Ignore all dotfiles...
+.*
+# except for .gitignore
+!.gitignore
+
+# intelliJ files
+.idea
+*.iml
+*.ipr
+*.iws
+out
+
+# Ignore Play! working directory #
+db
+eclipse
+log
+logs
+precompiled
+tmp
+test-result
+eclipse
+server.pid
+/lib
+/modules
+target
+gradle-build

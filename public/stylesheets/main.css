@@ -1,0 +1,30 @@
+#world {
+    width: 220px;
+}
+
+.location {
+    border: 1px solid black;
+    margin: 1px;
+    display: inline-block;
+    float: left;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    color: black;
+}
+
+.location.player {
+    color: white;
+}
+
+.location.player-1 {
+    background-color: red;
+}
+
+.location.player-2 {
+    background-color: #4169e1;
+}
+
+.location.player-3 {
+    background-color: #32cd32;
+}
