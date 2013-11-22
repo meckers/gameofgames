@@ -14,7 +14,10 @@ GOG.Location = Class.extend({
     bindEvents: function() {
         var me=this;
         this.getDomElement().click(function() {
-            me.assign(GOG.App.currentPlayer);
+            if (GOG.App.currentPlayer !== me.player) {
+                me.assign(GOG.App.currentPlayer);
+                Events.trigger('location-clicked', this);
+            }
         })
     },
 
