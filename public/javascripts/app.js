@@ -4,14 +4,21 @@ GOG.App = {
 
     world: null,
     players: [],
+    messageLog: null,
     settings: {
-        turnsPerRound: 3
+        turnsPerRound: 3,
+        aspects: {
+            'combat' : GOG.SuperSimpleCombat
+        }
     },
     currentPlayerIndex: 0,
     currentTurn: 0,
     currentRound: 1,
 
+
     init: function() {
+
+        this.messageLog = new MessageLog("#message-log");
 
         this.bindEvents();
 
@@ -29,7 +36,29 @@ GOG.App = {
     },
 
     bindEvents: function() {
-        Events.register('location-clicked', this, this.nextTurn);
+        Events.register('location-clicked', this, this.onLocationClaimed);
+    },
+
+    onLocationClaimed: function(location) {
+
+        if (location.player === this.currentPlayer) {
+            return;
+        }
+
+        var result = {
+            success: true,
+            message: 'The location was taken without effort.'
+        };
+
+        if (this.settings.aspects.combat && location.player) {
+            result = this.settings.aspects.combat.resolve();
+        }
+
+        if (result.success) {
+            location.assignToPlayer(this.currentPlayer);
+        }
+        this.messageLog.write(result.message);
+        this.nextTurn();
     },
 
     nextTurn: function(location) {
@@ -63,9 +92,11 @@ GOG.App = {
     },
 
     refreshStats: function() {
+        var me = this;
         $("#players").empty();
         $(this.players).each(function(i,e) {
             var playerElement = $("<div></div>");
+            playerElement.css('font-weight', me.currentPlayer && (e.id == me.currentPlayer.id) ? 'bold' : 'normal');
             playerElement.html(e.getName() + ': ' + e.noOfLocations);
             $("#players").append(playerElement);
         })

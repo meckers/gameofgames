@@ -10,8 +10,6 @@ GOG.World = Class.extend({
     init: function() {
         console.log("init world");
         this.buildMap();
-        console.log(this.map);
-        console.log("a location is", this.map[4][5]); // should be 42.
     },
 
     buildMap: function() {
@@ -34,7 +32,6 @@ GOG.World = Class.extend({
     },
 
     drawMap: function(container) {
-        console.log("drawing map");
         this.forEachLocation(function(e) {
             $(container).append(e.getDomElement());
         })
